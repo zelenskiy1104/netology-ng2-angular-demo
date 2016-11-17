@@ -17,7 +17,10 @@
 <div class="list-group">
     <a ng-href="#/pokemons/{{singlePokemon.id }}" class="list-group-item"
        data-ng-repeat="singlePokemon in vm.pokemons | filter:vm.myQuery | orderBy: vm.myOrderProperty">
-        <h4 class="list-group-item-heading">
+        <h4 class="list-group-item-heading" data-nd-inline-edit data-mb-model="file.name"
+            data-mb-trigger="vm.renameFileEnabledId === file.id"
+            data-mb-validation-config="vm.fileRenameValidationConfig" data-mb-tab-index="15"
+            data-mb-save-fn="vm.renameItem" data-mb-cancel="vm.toggleRename">
             <span class="badge">{{singlePokemon.id }}</span>
             {{singlePokemon.name | uppercase }}
         </h4>
