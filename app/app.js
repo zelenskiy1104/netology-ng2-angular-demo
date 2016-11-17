@@ -9,26 +9,33 @@ angular.module('myApp', [
 ]).
 config(function($stateProvider) {
 
-      var listState = {
-        name: 'pokemonList',
-        url: '/list',
+      var view1State = {
+        name: 'view1',
+        url: '/view1',
         templateUrl: 'view1/view1.html',
         controller: 'View1Ctrl'
       };
 
-      var detailState = {
-        name: 'pokemonDetails',
-        url: '/about',
-        templateUrl: 'view2/view2.html',
-        controller: 'View2Ctrl'
-      };
-      var otherState = {
-        name: 'pokemonOther',
-        url: '/other',
+      var view2State = {
+        name: 'view2',
+        url: '/view2',
         templateUrl: 'view2/view2.html',
         controller: 'View2Ctrl'
       };
 
-      $stateProvider.state(listState);
-      $stateProvider.state(detailState);
+      var pokeListState = {
+        name: 'pokeList',
+        url: '/list',
+        templateUrl: 'PokemonList/PokemonList.html',
+        controller: 'PokemonListCtrl as vm'
+      };
+      var createPokemonState = {
+        name: 'createNewPokemon',
+        url: '/new',
+        templateUrl: 'CreatePokemon/CreatePokemon.html',
+        controller: 'CreatePokemonCtrl as vm'
+      }
+
+      $stateProvider.state(pokeListState);
+      $stateProvider.state(createPokemonState);
 });
