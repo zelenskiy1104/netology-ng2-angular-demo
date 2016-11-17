@@ -52,4 +52,95 @@ angular
             restrict: 'A',
             link: link
         };
-    }]);
+    }])
+    .directive('ndInlineEdit', function ($compile, $templateRequest) {
+
+        console.log('inlineEdit')
+
+        'use strict';
+
+        /*
+         * This directive should be used on an element wrapping the original element that you want to replace
+         * with an input field. The directive is made to have as small a footprint as possible to be able to use
+         * it in longer lists.
+         * The directive will not apply more scope watchers until the trigger expression evaluates to true.
+         */
+
+        return {
+            restrict: 'A',
+            scope: {
+                ndModel: '=', // The string model to edit
+                ndTrigger: '=', // The property to watch to decide when to trigger the input field.
+                ndSaveFn: '=', // The ctrl function to call to save the update. Expects a promise to be returned.
+                ndCancel: '=', // Function to call when cancel is clicked. Can be toggle function as it won't pass anything
+                mbValidationConfig: '=?' //Object containing settings for validation config
+            },
+            link: function (scope, element) {
+
+                var originalValue = angular.copy(scope.ndModel);
+                var originalContent;
+                var initialized = false;
+                var childScope;
+                var editValue = '';
+
+                function getInnerElement() {
+                    return angular.element(element.children()[0]);
+                }
+
+                function cancel() {
+                    if (initialized) {
+                        editValue = '';
+                        getInnerElement().replaceWith($compile(originalContent)(scope.$parent));
+                        scope.ndCancel();
+                        initialized = false;
+                        childScope.$destroy();
+                    }
+                }
+
+                function save(form) {
+
+                    if (originalValue === form.input.$viewValue) {
+                        cancel();
+                        return;
+                    }
+
+                    if (form.$valid) {
+                        scope.ndSaveFn(childScope.editValue).finally(function () {
+                            cancel();
+                        });
+                    }
+                }
+
+                function initInput() {
+
+                    originalValue = angular.copy(scope.ndModel);
+                    console.log(originalValue)
+                    $templateRequest('components/nd-inline-edit.html').then(function (template) {
+                        console.log(template);
+                        editValue = originalValue;
+                        childScope = scope.$new();
+                        angular.extend(childScope, {
+                            save: save,
+                            cancel: cancel,
+                            editValue: editValue
+                        });
+
+                        originalContent = getInnerElement().replaceWith($compile(template)(childScope));
+                        initialized = true;
+                    });
+                }
+
+                var triggerListener = scope.$watch('ndTrigger', function () {
+                    if (scope.ndTrigger) {
+                        initInput();
+                    } else {
+                        cancel();
+                    }
+                });
+
+                scope.$on('$destroy', function () {
+                    triggerListener();
+                });
+            }
+        };
+    });
