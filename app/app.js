@@ -34,8 +34,16 @@ config(function($stateProvider) {
         url: '/new',
         templateUrl: 'CreatePokemon/CreatePokemon.html',
         controller: 'CreatePokemonCtrl as vm'
-      }
+      };
+        var pokemonDetailState = {
+        name: 'detail',
+        url: '/pokemons/:pokemonId',
+        templateUrl: 'PokemonDetail/PokemonDetail.html',
+        controller: 'PokemonDetailCtrl as vm'
+      };
 
-      $stateProvider.state(pokeListState);
-      $stateProvider.state(createPokemonState);
+      $stateProvider
+          .state(pokeListState)
+          .state(createPokemonState)
+          .state(pokemonDetailState);
 });

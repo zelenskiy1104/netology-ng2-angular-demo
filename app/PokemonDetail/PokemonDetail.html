@@ -7,8 +7,9 @@
     <div class="media-body">
         <span class="badge">{{vm.pokemon.id }}</span>
         <h4 class="media-heading">{{vm.pokemon.name | uppercase }}</h4>
-        <p>Вес:
-            {{vm.pokemon.weight}}, рост:
-            {{vm.pokemon.height}}</p>
+        <pokemon-detail pokemon="vm.pokemon"></pokemon-detail>
     </div>
+
+    Date format: <input ng-model="vm.format"> <hr/>
+    Current time is: <span my-current-time="vm.format"></span>
 </div>
