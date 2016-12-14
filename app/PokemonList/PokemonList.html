@@ -15,19 +15,19 @@
 </div>
 
 <div class="list-group">
-    <a ng-href="#/pokemons/{{singlePokemon.id }}" class="list-group-item"
+    <div  class="list-group-item"
        data-ng-repeat="singlePokemon in vm.pokemons | filter:vm.myQuery | orderBy: vm.myOrderProperty">
         <h4 class="list-group-item-heading">
             <span class="badge">{{singlePokemon.id }}</span>
-            {{singlePokemon.name | uppercase }}
+            <a ng-href="#/pokemons/{{singlePokemon.id }}">{{singlePokemon.name | uppercase }}</a>
         </h4>
         <p class="list-group-item-text">
             Вес:
             {{singlePokemon.weight}}, рост:
             {{singlePokemon.height}}
         </p>
-
-    </a>
+        <button ng-click="vm.addToCart(singlePokemon)">Add</button>
+    </div>
 </div>
 
 <div class="panel panel-default" ng-show="myQuery">
