@@ -3,10 +3,7 @@
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
     'ui.router',
-    'ngMessages',
-    'myApp.view1',
-    'myApp.view2',
-    'myApp.version'
+    'ngMessages'
 ]).
 config(function($stateProvider) {
 
@@ -28,5 +25,11 @@ config(function($stateProvider) {
             url: '/pokemons/:pokemonId',
             templateUrl: 'PokemonDetail/PokemonDetail.html',
             controller: 'PokemonDetailCtrl as vm'
+        }).state({
+            name: 'detail.edit',
+            url: '/edit',
+            parent: 'detail',
+            templateUrl: 'PokemonDetail/PokemonDetailEdit.html',
+            controller: function() {}
         });
 });

@@ -2,27 +2,26 @@
 
 angular
     .module('myApp')
-    .controller('PokemonDetailCtrl', function ($state, $stateParams, PokemonService) {
+    .controller('PokemonDetailCtrl', function($state, $stateParams, PokemonService) {
 
         var vm = this;
 
         vm.format = 'M/d/yy h:mm:ss a';
 
         PokemonService.getPokemon($stateParams.pokemonId)
-            .then(function (pokemonData) {
+            .then(function(pokemonData) {
                 vm.pokemon = pokemonData.data;
             });
 
     }).component('pokemonDetail', {
         //components match only elements
         template: '<p>Вес: {{$ctrl.pokemon.weight}}, рост: {{$ctrl.pokemon.height}}</p>',
-        controller: function () {
-        },
+        controller: function() {},
         bindings: {
             pokemon: '='
         }
     })
-    .directive('myCurrentTime', ['$interval', 'dateFilter', function ($interval, dateFilter) {
+    .directive('myCurrentTime', ['$interval', 'dateFilter', function($interval, dateFilter) {
 
         function link(scope, element, attrs) {
             var format,
@@ -33,17 +32,17 @@ angular
                 element.text(dateFilter(new Date(), format));
             }
 
-            scope.$watch(attrs.myCurrentTime, function (value) {
+            scope.$watch(attrs.myCurrentTime, function(value) {
                 format = value;
                 updateTime();
             });
 
-            element.on('$destroy', function () {
+            element.on('$destroy', function() {
                 $interval.cancel(timeoutId);
             });
 
             // start the UI update process; save the timeoutId for canceling
-            timeoutId = $interval(function () {
+            timeoutId = $interval(function() {
                 updateTime(); // update DOM
             }, 1000);
         }
@@ -53,9 +52,7 @@ angular
             link: link
         };
     }])
-    .directive('ndInlineEdit', function ($compile, $templateRequest) {
-
-        console.log('inlineEdit')
+    .directive('ndInlineEdit', function($compile, $templateRequest) {
 
         'use strict';
 
@@ -73,9 +70,9 @@ angular
                 ndTrigger: '=', // The property to watch to decide when to trigger the input field.
                 ndSaveFn: '=', // The ctrl function to call to save the update. Expects a promise to be returned.
                 ndCancel: '=', // Function to call when cancel is clicked. Can be toggle function as it won't pass anything
-                mbValidationConfig: '=?' //Object containing settings for validation config
+                ndValidationConfig: '=?' //Object containing settings for validation config
             },
-            link: function (scope, element) {
+            link: function(scope, element) {
 
                 var originalValue = angular.copy(scope.ndModel);
                 var originalContent;
@@ -105,7 +102,7 @@ angular
                     }
 
                     if (form.$valid) {
-                        scope.ndSaveFn(childScope.editValue).finally(function () {
+                        scope.ndSaveFn(childScope.editValue).finally(function() {
                             cancel();
                         });
                     }
@@ -114,9 +111,7 @@ angular
                 function initInput() {
 
                     originalValue = angular.copy(scope.ndModel);
-                    console.log(originalValue)
-                    $templateRequest('components/nd-inline-edit.html').then(function (template) {
-                        console.log(template);
+                    $templateRequest('components/nd-inline-edit.html').then(function(template) {
                         editValue = originalValue;
                         childScope = scope.$new();
                         angular.extend(childScope, {
@@ -130,7 +125,7 @@ angular
                     });
                 }
 
-                var triggerListener = scope.$watch('ndTrigger', function () {
+                var triggerListener = scope.$watch('ndTrigger', function() {
                     if (scope.ndTrigger) {
                         initInput();
                     } else {
@@ -138,7 +133,7 @@ angular
                     }
                 });
 
-                scope.$on('$destroy', function () {
+                scope.$on('$destroy', function() {
                     triggerListener();
                 });
             }
