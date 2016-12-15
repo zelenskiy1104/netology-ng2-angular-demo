@@ -9,6 +9,7 @@ angular
     vm.addPokemon = function(myPokemon) {
         console.log(myPokemon);
         vm.newPokemon = {};
+        vm.pokemonForm.$setPristine();
     };
 
 });
