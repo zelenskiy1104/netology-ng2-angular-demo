@@ -2,9 +2,7 @@
     <div class="panel-body">
 
         Найти:
-        <input data-ng-model="vm.myQuery"><br><br>
-
-        Сортировать по:
+        <input data-ng-model="vm.myQuery"><br><br> Сортировать по:
         <select data-ng-model="vm.myOrderProperty">
             <option value="id">ID</option>
             <option value="weight">Весу</option>
@@ -15,16 +13,13 @@
 </div>
 
 <div class="list-group">
-    <div  class="list-group-item"
-       data-ng-repeat="singlePokemon in vm.pokemons | filter:vm.myQuery | orderBy: vm.myOrderProperty">
+    <div class="list-group-item" data-ng-repeat="singlePokemon in vm.pokemons | filter:vm.myQuery | orderBy: vm.myOrderProperty">
         <h4 class="list-group-item-heading">
             <span class="badge">{{singlePokemon.id }}</span>
-            <a ng-href="#/pokemons/{{singlePokemon.id }}">{{singlePokemon.name | uppercase }}</a>
+            <a ng-href="#!/pokemons/{{singlePokemon.id }}">{{singlePokemon.name | uppercase }}</a>
         </h4>
         <p class="list-group-item-text">
-            Вес:
-            {{singlePokemon.weight}}, рост:
-            {{singlePokemon.height}}
+            Вес: {{singlePokemon.weight}}, рост: {{singlePokemon.height}}
         </p>
         <button ng-click="vm.addToCart(singlePokemon)">Add</button>
     </div>
@@ -34,8 +29,7 @@
     <div class="panel-body">
 
         <p>
-            Выведены покемоны, содержащие
-            {{vm.myQuery}}
+            Выведены покемоны, содержащие {{vm.myQuery}}
         </p>
 
     </div>
