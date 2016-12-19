@@ -10,6 +10,27 @@ angular.module('myApp.view1', ['ngRoute'])
     }])
 
     .controller('View1Ctrl', function ($scope) {
+        $scope.showName = (pokemon) => {
+            alert(pokemon.name);
+        };
+
+        $scope.color = (pokemon) => {
+            var type = pokemon.type[0];
+
+            if (type == 'grass') {
+                return 'green';
+            }
+            else if (type == 'fire') {
+                return 'red';
+            }
+            else if (type == 'water') {
+                return 'blue';
+            }
+            else {
+                return 'black';
+            }
+        };
+
         $scope.pokemons = [{
             "abilities": [
                 "Overgrow"
